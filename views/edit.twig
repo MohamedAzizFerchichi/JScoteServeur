@@ -1,0 +1,22 @@
+
+
+{# edit comment  #}
+    
+    {% extends "layout.html" %}
+    
+    {% block content %}
+    
+    <h1>
+    {{title}}
+    </h1>
+    <form action="/edit/{{comment.id}}" methode ="post">
+    <label for =" comment"> Add a comment</label>
+    <input type="text" name="name" placeholder="Add  a comment">
+    <input type="submit" value="save">
+    </form>
+    
+    {%  for comment in comments %}
+    <h3>  {{comment.title }} </h3>
+    {% endfor %}
+    
+    {% endblock %}

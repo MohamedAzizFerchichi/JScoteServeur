@@ -1,0 +1,21 @@
+{% block content %}
+
+<h1>
+{{title}}
+</h1>
+<form action="/create" methode ="post">
+<label for =" comment"> Add a comment</label>   
+<input type="text" name="name" placeholder="Add  a comment">
+<input type="submit" value="save">
+</form>
+
+{%  for comment in comments %}
+<h3>  {{comment.title}} </h3> 
+{# delete #}
+<form action="/delete/{{comment.id}}" method="post">
+<input type="submit" value="delete">
+</form>
+{# update #}
+{% endfor %}
+
+{% endblock %}
