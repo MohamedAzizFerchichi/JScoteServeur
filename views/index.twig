@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Website</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+      
+      nav {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+      }
+      
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      
+      nav li {
+        display: inline-block;
+        margin-right: 10px;
+      }
+      
+      nav li:last-child {
+        margin-right: 0;
+      }
+      
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 5px;
+      }
+      
+      nav a:hover {
+        background-color: #555;
+      }
+      
+      h1 {
+        font-size: 36px;
+        margin-top: 50px;
+      }
+      
+      p {
+        font-size: 18px;
+        line-height: 1.5;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+         {% if isLoggedIn  %}
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/Auth/logout">Logout </a></li> 
+        {% else %}
+          <li><a href="/Auth/login">Login {{ isLogedIn }}</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    <h1>Welcome to my website</h1>
+    <p>This is my website. It's awesome!</p>
+  </body>
+</html>

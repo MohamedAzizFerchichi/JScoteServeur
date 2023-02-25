@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      
+      h1 {
+        font-size: 36px;
+        margin-top: 50px;
+      }
+      
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      .name {
+        font-weight: bold;
+      }
+      
+      .email {
+        color: #666;
+      }
+      
+    </style>
+  </head>
+  <body>
+        
+    <a href ="/"> back </a>
+    <h1>Contact List</h1>
+    <a href="/contact/new">Add New Contact</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>phone</th>
+          <th> Action </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contact in contacts %}
+        <tr>
+          <td class="name">{{ contact.name }}</td>
+          <td class="email">{{ contact.email }}</td>
+          <td class="phone">{{ contact.phone }}</td>
+            <td class="action">
+                <a href="/contact/{{ contact.id }}/edit">Edit</a>
+                <a href="/contact/{{ contact.id }}/delete">Delete</a>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
