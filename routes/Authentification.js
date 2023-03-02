@@ -69,15 +69,21 @@ router.post('/register', function(req, res) {
         if (!isMatch) {
           return res.status(401).send('Invalid username or password');
         }
-  
-        const payload = { id: user._id };
-        const options = { expiresIn: '1d' };
-        const token = jwt.sign(payload, secretKey, options);
         session({
           secret: secretKey ,
           resave: false,
-          saveUninitialized: false
+          saveUninitialized: false,
         });
+        
+        const payload = { id: user._id };
+        const options = { expiresIn: '1d' };
+         if (req.body.rememberMe) {
+          const token = jwt.sign(payload, secretKey, options);
+          secret.cookie('rememberMe', token, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+        }
+        
+       
+       
         session.isLoggedIn = true;
         res.redirect('/')
       });
@@ -93,5 +99,47 @@ router.post('/register', function(req, res) {
   
 });
 
+//list all users
+router.get('/ListUser', function(req, res){
+    User.find(function(err, data){
+        if(err) throw err;
+        res.render('Authentification/listUser.twig', {title: 'List', users: data})
+    });
+});
+
+//delete user 
+router.get('/:id/delete', function(req, res){
+  User.findById(req.params.id, function(err){
+    console.log(req.params.id);
+     if(err) throw err;
+     User.findByIdAndRemove(req.params.id, function(err){
+         if(err) throw err;
+         console.log('Contact deleted successfully!');
+         res.redirect('/auth/ListUser');
+     }
+     );
+ });
+
+}); 
+
+//edit 
+router.get('/:id/edit', function(req, res){
+  User.findById(req.params.id, function(err, data){
+    if(err) throw err;
+    console.log(data);
+    res.render('Authentification/editUser.twig', {title: 'Modifier user', user: data})
+});
+});
+router.post('/:id/edit', function(req, res){
+  User.findByIdAndUpdate(req.params.id, {
+      name : req.body.name,
+      email : req.body.email,
+      phone : req.body.phone,
+  }, function(err){
+      if(err) throw err;
+      console.log('Contact updated successfully!');
+      res.redirect('/auth/ListUser');
+    });
+});
 
 module.exports = router;
